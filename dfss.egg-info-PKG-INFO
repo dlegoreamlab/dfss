@@ -1,0 +1,122 @@
+Metadata-Version: 2.4
+Name: dfss
+Version: 1.0.2
+Summary: DFSS: stable FileRecord-based schema library
+Author: DFSS
+Keywords: schema,metadata,filerecord,validation,library
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# DFSS
+
+DFSS is a stable `FileRecord`-based schema library for managing structured metadata for files, URLs, webpages, articles, videos, audio, images, and related resources.
+
+## Features
+
+- Core `FileRecord` data model
+- Schema registry with versioned schema definitions
+- Built-in validators for common record types
+- Built-in schema coverage for:
+  - `article`
+  - `video`
+  - `pdf`
+  - `image`
+  - `audio`
+  - `music`
+  - `youtube_video`
+  - `url`
+  - `rss`
+  - `webpage`
+- Builder helpers for article and video records
+- Pure Python wheel output
+
+## Installation
+
+```bash
+pip install git+https://github.com/dlegoreamlab/dfss.git
+```
+
+For local build artifacts:
+
+```bash
+pip install dist/dfss-1.0.2-py3-none-any.whl
+```
+
+## Quick Start
+
+```python
+from dfss import FileRecord, SchemaRegistry
+
+print(SchemaRegistry.types())
+
+record = FileRecord.create(
+    type="article",
+    path="post.html",
+    meta={
+        "fields": {
+            "title": "Hello",
+            "author": "DFSS",
+            "published_at": "2026-06-01",
+            "summary": "example",
+            "language": "ko",
+            "source": "local",
+        },
+        "content": {
+            "full_text": "본문",
+            "excerpt": "요약",
+        },
+        "semantic": {
+            "topics": ["dfss"],
+            "keywords": ["schema"],
+            "entities": ["FileRecord"],
+        },
+        "relation": {
+            "source_url": "https://example.com",
+            "parent_global_id": "root",
+            "related_global_ids": [],
+        },
+        "scoring": {
+            "quality": 1.0,
+            "relevance": 1.0,
+            "confidence": 1.0,
+        },
+    },
+)
+
+assert record.validate() is True
+print(record.to_dict())
+```
+
+## Build
+
+```bash
+python -m pip install build
+python -m build
+```
+
+This creates:
+
+- `dist/dfss-1.0.2-py3-none-any.whl`
+- `dist/dfss-1.0.2.tar.gz`
+
+## Test
+
+```bash
+PYTHONPATH=. python tests/smoke_test.py
+```
+
+## Package Structure
+
+- `dfss/core`: core record, builder, registry, validator
+- `dfss/schemas`: built-in schemas and schema-specific helpers
+- `tests`: smoke test
+
+## Python Version
+
+- Python 3.10+
