@@ -5,7 +5,7 @@ from typing import Any, Dict
 from ...core.builder import FileRecordBuilder
 
 
-def build_article_record(
+def build_site_record(
     path: str,
     meta: Dict[str, Any] | None = None,
     *,
