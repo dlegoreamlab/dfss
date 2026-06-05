@@ -3,12 +3,13 @@ from dfss.schemas.article import build_article_record
 from dfss.schemas.image import build_image_record
 from dfss.schemas.music import build_music_record
 from dfss.schemas.pdf import build_pdf_record
+from dfss.schemas.site import build_site_record
 from dfss.schemas.video import build_video_record
 
 
 def main():
     supported = set(SchemaRegistry.types())
-    assert {"article", "video", "pdf", "image", "audio", "music", "youtube_video", "url", "rss", "webpage"}.issubset(supported)
+    assert {"article", "video", "pdf", "image", "audio", "music", "youtube_video", "url", "rss", "webpage", "site"}.issubset(supported)
 
     article = FileRecord.create(
         type="article",
@@ -69,6 +70,81 @@ def main():
         },
     )
     assert image.validate() is True
+
+    site = build_site_record(
+        path="https://example.com",
+        meta={
+            "fields": {
+                "url": "https://example.com",
+                "domain": "example.com",
+                "title": "Example",
+                "site_type": "docs",
+                "language": "en",
+                "framework": "static",
+                "server": "nginx",
+                "status_code": 200,
+                "created_at": "2026-06-01T00:00:00Z",
+                "crawled_at": "2026-06-01T00:05:00Z",
+                "updated_at": "2026-06-01T00:10:00Z",
+            },
+            "structure": {
+                "pages": ["/", "/docs"],
+                "links": ["https://example.com/docs"],
+                "resources": ["/app.js", "/app.css"],
+                "api_endpoints": ["https://example.com/api/health"],
+                "media_streams": [],
+                "sitemaps": ["https://example.com/sitemap.xml"],
+                "robots_txt": "User-agent: *",
+            },
+            "authentication": {
+                "auth_required": False,
+                "auth_type": "none",
+                "login_endpoint": "",
+                "session_type": "stateless",
+            },
+            "content": {
+                "html": "<html></html>",
+                "text": "Example site",
+                "scripts": ["app.js"],
+                "styles": ["app.css"],
+            },
+            "media": {
+                "images": [],
+                "videos": [],
+                "audios": [],
+                "documents": [],
+            },
+            "semantic": {
+                "topics": ["docs"],
+                "keywords": ["example"],
+                "entities": ["Example"],
+                "summary": "Example site",
+                "embedding": [0.1, 0.2],
+            },
+            "relation": {
+                "outbound_links": [],
+                "inbound_links": [],
+                "api_relations": [],
+                "media_relations": [],
+                "related_records": [],
+            },
+            "analysis": {
+                "technology_stack": ["nginx", "static"],
+                "content_category": "documentation",
+                "crawl_depth": 2,
+                "api_count": 1,
+                "media_count": 0,
+                "link_count": 1,
+            },
+            "scoring": {
+                "importance_score": 0.8,
+                "quality_score": 0.9,
+                "freshness_score": 0.7,
+                "authority_score": 0.6,
+            },
+        },
+    )
+    assert site.validate() is True
 
     music = build_music_record(
         path="song.mp3",

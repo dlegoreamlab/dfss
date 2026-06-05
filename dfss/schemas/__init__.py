@@ -11,6 +11,7 @@ from .builtin import (
 from .image import IMAGE_SCHEMA
 from .music import MUSIC_SCHEMA
 from .pdf import PDF_SCHEMA
+from .site import SITE_SCHEMA
 from .video import VIDEO_SCHEMA
 
 register_builtin_schemas()
@@ -20,6 +21,7 @@ __all__ = [
     "VIDEO_SCHEMA",
     "PDF_SCHEMA",
     "IMAGE_SCHEMA",
+    "SITE_SCHEMA",
     "AUDIO_SCHEMA",
     "MUSIC_SCHEMA",
     "YOUTUBE_VIDEO_SCHEMA",

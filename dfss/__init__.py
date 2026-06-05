@@ -8,6 +8,7 @@ from .schemas import (
     MUSIC_SCHEMA,
     PDF_SCHEMA,
     RSS_SCHEMA,
+    SITE_SCHEMA,
     URL_SCHEMA,
     VIDEO_SCHEMA,
     WEBPAGE_SCHEMA,
@@ -35,5 +36,6 @@ __all__ = [
     "YOUTUBE_VIDEO_SCHEMA",
     "URL_SCHEMA",
     "RSS_SCHEMA",
+    "SITE_SCHEMA",
     "WEBPAGE_SCHEMA",
 ]

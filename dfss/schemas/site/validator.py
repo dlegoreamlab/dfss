@@ -3,5 +3,5 @@ from __future__ import annotations
 from ...core.validator import FileRecordValidator
 
 
-class ArticleRecordValidator(FileRecordValidator):
+class SiteRecordValidator(FileRecordValidator):
     RECORD_TYPE = "site"
