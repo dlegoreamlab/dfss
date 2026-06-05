@@ -3,7 +3,7 @@ from __future__ import annotations
 from ...constants import DEFAULT_SCHEMA_VERSION
 from ...core.registry import SchemaRegistry
 
-SCHEMA_NAME = "article"
+SCHEMA_NAME = "site"
 SCHEMA_VERSION = DEFAULT_SCHEMA_VERSION
 
 SITE_SCHEMA = {
