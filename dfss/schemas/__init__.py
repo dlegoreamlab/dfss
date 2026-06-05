@@ -1,6 +1,6 @@
 from .article import ARTICLE_SCHEMA
+from .audio import AUDIO_SCHEMA
 from .builtin import (
-    AUDIO_SCHEMA,
     BUILTIN_SCHEMAS,
     RSS_SCHEMA,
     URL_SCHEMA,

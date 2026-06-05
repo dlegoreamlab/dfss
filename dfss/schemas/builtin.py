@@ -2,35 +2,10 @@ from __future__ import annotations
 
 from ..constants import DEFAULT_SCHEMA_VERSION
 from ..core.registry import SchemaRegistry
-
-AUDIO_SCHEMA = {
-    "fields": {
-        "title": str,
-        "codec": str,
-        "duration_sec": (int, float),
-        "sample_rate": int,
-        "channels": int,
-        "language": str,
-    },
-    "content": {
-        "transcript": str,
-        "summary": str,
-    },
-    "semantic": {
-        "topics": list,
-        "keywords": list,
-        "speakers": list,
-    },
-    "relation": {
-        "source_url": str,
-        "derived_from": str,
-        "segments": list,
-    },
-    "scoring": {
-        "quality": (int, float),
-        "transcription_confidence": (int, float),
-    },
-}
+# Backward-compat: AUDIO_SCHEMA was previously defined here.
+# It now lives in `dfss.schemas.audio` (the audio sub-package), and is re-exported here
+# so that `from dfss.schemas.builtin import AUDIO_SCHEMA` keeps working.
+from .audio import AUDIO_SCHEMA  # noqa: F401
 
 YOUTUBE_VIDEO_SCHEMA = {
     "fields": {
@@ -142,7 +117,6 @@ WEBPAGE_SCHEMA = {
 }
 
 BUILTIN_SCHEMAS = {
-    "audio": AUDIO_SCHEMA,
     "youtube_video": YOUTUBE_VIDEO_SCHEMA,
     "url": URL_SCHEMA,
     "rss": RSS_SCHEMA,
