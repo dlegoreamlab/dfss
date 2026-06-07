@@ -9,7 +9,7 @@ authors = [
     { name = "DLEGOREAM_LAB" }
 ]
 
-license = "Apache-2.0"
+license = "MIT"
 
 classifiers = [
     "Programming Language :: Python :: 3",
