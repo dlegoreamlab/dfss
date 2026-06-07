@@ -1,10 +1,19 @@
 from dfss import FileRecord, SchemaRegistry
 from dfss.schemas.article import build_article_record
+from dfss.schemas.audio import build_audio_record
 from dfss.schemas.image import build_image_record
 from dfss.schemas.music import build_music_record
 from dfss.schemas.pdf import build_pdf_record
 from dfss.schemas.site import build_site_record
 from dfss.schemas.video import build_video_record
+
+
+def telegram_relation(chat_id: int, message_id: int):
+    return {
+        "platform": "telegram",
+        "chat_id": chat_id,
+        "message_id": message_id,
+    }
 
 
 def main():
@@ -34,16 +43,46 @@ def main():
     assert built_video.type == "video"
     assert built_video.meta["_schema"]["name"] == "video"
 
+    telegram_video = build_video_record(
+        path="movie.mp4",
+        meta={
+            "fields": {
+                "file_name": "movie.mp4",
+                "size": 123456789,
+                "mime_type": "video/mp4",
+            },
+            "relation": telegram_relation(-100123456, 9999),
+        },
+    )
+    assert telegram_video.validate() is True
+
+    audio = build_audio_record(
+        path="voice.ogg",
+        meta={
+            "fields": {
+                "file_name": "voice.ogg",
+                "size": 2048,
+                "mime_type": "audio/ogg",
+            },
+            "relation": telegram_relation(-100123456, 10001),
+        },
+    )
+    assert audio.validate() is True
+
     pdf = build_pdf_record(
         path="paper.pdf",
         meta={
             "fields": {
                 "title": "Spec",
+                "file_name": "paper.pdf",
+                "size": 4096,
+                "mime_type": "application/pdf",
                 "source_url": "https://example.com/spec.pdf",
                 "snippet": "summary",
                 "page_count": 12,
                 "language": "ko",
             },
+            "relation": telegram_relation(-100123456, 10002),
             "scoring": {"relevance": 0.9, "freshness": 0.8},
         },
     )
@@ -53,6 +92,9 @@ def main():
         path="photo.jpg",
         meta={
             "fields": {
+                "file_name": "photo.jpg",
+                "size": 8192,
+                "mime_type": "image/jpeg",
                 "width": 1920,
                 "height": 1080,
                 "format": "jpg",
@@ -66,6 +108,7 @@ def main():
                 "dominant_color": "blue",
                 "embedding": [0.1, 0.2],
             },
+            "relation": telegram_relation(-100123456, 10003),
             "map": {"tile": "12/123/456", "geohash": "wydm6", "region": "seoul"},
         },
     )
@@ -150,12 +193,16 @@ def main():
         path="song.mp3",
         meta={
             "fields": {
+                "file_name": "song.mp3",
+                "size": 16384,
+                "mime_type": "audio/mpeg",
                 "play_score": 100,
                 "artist": "DFSS",
                 "album": "Demo",
                 "genre": "test",
                 "duration": 180,
-            }
+            },
+            "relation": telegram_relation(-100123456, 10004),
         },
     )
     assert music.validate() is True
